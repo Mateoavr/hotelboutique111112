@@ -1,32 +1,537 @@
 <!DOCTYPE html>
-<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hotel Boutique Valparaíso</title>
-<style>
-body{margin:0;font-family:Arial,sans-serif;background:#f4f4f4;color:#333}
-header{height:90vh;background:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1600&auto=format&fit=crop') center/cover;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center}
-header h1{font-size:56px;margin:0}header p{font-size:22px}
-.btn{background:#d4af37;color:#111;padding:14px 28px;border-radius:6px;text-decoration:none;font-weight:bold}
-nav{position:sticky;top:0;background:#1a2530;padding:15px;text-align:center}nav a{color:#fff;margin:0 15px;text-decoration:none}
-section{max-width:1100px;margin:auto;padding:60px 20px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-.card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 5px 15px rgba(0,0,0,.15)}
-.card img{width:100%;height:180px;object-fit:cover}.card div{padding:20px}
-footer{background:#1a2530;color:#fff;text-align:center;padding:30px}
-input,textarea{width:100%;padding:10px;margin:8px 0}
-button{background:#5b8a3f;color:#fff;border:none;padding:12px 20px;border-radius:5px}
-iframe{width:100%;height:350px;border:0}
-</style></head><body>
-<header><div><h1>Hotel Boutique Valparaíso</h1><p>Habitaciones, tours y experiencias inolvidables frente al mar.</p><a class="btn" href="#habitaciones">Reservar Ahora</a></div></header>
-<nav><a href="#habitaciones">Habitaciones</a><a href="#servicios">Servicios</a><a href="#tours">Tours</a><a href="#contacto">Contacto</a></nav>
-<section id="habitaciones"><h2>Habitaciones</h2><div class="cards">
-<div class="card"><img src="https://hotel17.cl/wp-content/uploads/sites/58/2017/06/3.2-VISTA-HABITACION-GRANDE.jpg"><div><h3>Estándar</h3><p>2 personas · Wi‑Fi · Desayuno</p><b>$79.990 / noche</b></div></div>
-<div class="card"><img src="https://hotel17.cl/wp-content/uploads/sites/58/2017/06/3.2-VISTA-HABITACION-GRANDE.jpg"><div><h3>Doble</h3><p>3 personas · Vista al mar</p><b>$109.990 / noche</b></div></div>
-<div class="card"><img src="https://hotel17.cl/wp-content/uploads/sites/58/2017/06/3.2-VISTA-HABITACION-GRANDE.jpg"><div><h3>Familiar</h3><p>4 personas · Balcón</p><b>$149.990 / noche</b></div></div>
-</div></section>
-<section id="servicios"><h2>Servicios</h2><div class="cards"><div class="card"><div>📶 Wi‑Fi</div></div><div class="card"><div>🍽 Restaurante</div></div><div class="card"><div>🚗 Estacionamiento</div></div><div class="card"><div>🛎 Recepción 24 horas</div></div></div></section>
-<section id="tours"><h2>Tours</h2><div class="cards"><div class="card"><img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=800&auto=format&fit=crop"><div><h3>Cerros y Ascensores</h3><p>Recorre los lugares más emblemáticos de Valparaíso.</p></div></div><div class="card"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=800&auto=format&fit=crop"><div><h3>Cena Patrimonial</h3><p>Gastronomía local con vista a la bahía.</p></div></div></div></section>
-<section><h2>Opiniones</h2><p>⭐⭐⭐⭐⭐ "Excelente atención y habitaciones impecables."</p></section>
-<section id="contacto"><h2>Contacto</h2><input placeholder="Nombre"><input placeholder="Correo"><textarea placeholder="Mensaje"></textarea><button>Enviar</button></section>
-<section><h2>Ubicación</h2><iframe src="https://maps.google.com/maps?q=valparaiso&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe></section>
-<footer>© 2026 Hotel Boutique Valparaíso</footer>
-</body></html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intranet Recepción</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #ecf0f1; }
+#panel { display: none; width: 100%; height: 100vh; }
+        .sidebar { width: 250px; background-color: #2c3e50; color: white; height: 100vh; padding: 20px; box-sizing: border-box; }
+        .sidebar h1 { border-bottom: 1px;}
+        .sidebar h2 { border-bottom: 1px solid #34495e; padding-bottom: 15px; }
+        .content { flex-grow: 1; padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        
+        /* Simbología y Grid de Habitaciones */
+        .legend { display: flex; gap: 15px; margin-bottom: 20px; }
+        .legend span { display: flex; align-items: center; gap: 5px; font-size: 0.9em; }
+        .dot { width: 15px; height: 15px; border-radius: 3px; }
+        
+.rooms-grid{
+    display:grid;
+    grid-template-columns:repeat(10,1fr);
+    gap:10px;
+}
+
+.room{
+    height:65px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:8px;
+    font-size:24px;
+    font-weight:bold;
+    color:white;
+}
+.login-container{
+    width:100%;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#ecf0f1;
+}
+
+.login-box{
+    width:350px;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,.2);
+    text-align:center;
+}
+
+.login-box input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+.login-box button{
+    width:100%;
+    padding:12px;
+    background:#2c3e50;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.login-box button:hover{
+    background:#34495e;
+}
+.modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000;
+}
+.modal-content { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+
+/* Estilos Tabla Reservas */
+table { width: 100%; background: white; border-collapse: collapse; text-align: left; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+th, td { padding: 12px 15px; border-bottom: 1px solid #ddd; }
+th { background-color: #2c3e50; color: white; }
+.btn-accion { padding: 6px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; color: white; }
+.btn-editar { background-color: #3498db; margin-right: 5px; }
+.btn-eliminar { background-color: #e74c3c; }
+.form-group { margin-bottom: 15px; text-align: left; }
+.form-group label { display: block; margin-bottom: 5px; font-size: 14px; font-weight: bold;}
+.form-group input, .form-group select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;}
+
+        
+        /* Colores requeridos */
+        .verde { background-color: #27ae60; } /* Disponible */
+        .rojo { background-color: #c0392b; } /* Ocupada */
+        .amarillo { background-color: #f1c40f; color: #333; } /* Limpieza */
+        .azul { background-color: #2980b9; } /* Mantenimiento */
+.modal-btn {
+            width: 100%; padding: 12px; border: none; border-radius: 5px; 
+            font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 10px;
+        }
+        .modal-btn.verde, .modal-btn.rojo, .modal-btn.azul { color: white; }
+    </style>
+</head>
+<body>
+
+<div id="modalEstado" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000;">
+    <div style="background:white; padding:25px; border-radius:10px; width:250px; text-align:center; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+        <h3 id="modalTitulo" style="margin-top:0;">Habitación X</h3>
+        <p style="margin-bottom:20px; color:#7f8c8d; font-size:14px;">Seleccione el estado de la Habitacion:</p>
+        
+        <button class="modal-btn verde" onclick="cambiarEstado('verde')">Disponible</button>
+        <button class="modal-btn rojo" onclick="cambiarEstado('rojo')">Ocupada</button>
+        <button class="modal-btn amarillo" onclick="cambiarEstado('amarillo')">Limpieza</button>
+        <button class="modal-btn azul" onclick="cambiarEstado('azul')">Mantenimiento</button>
+        
+        <button onclick="cerrarModal()" style="margin-top: 10px; width: 100%; padding: 10px; background: #ecf0f1; border: none; border-radius: 5px; cursor: pointer; color: #333;">Cancelar</button>
+    </div>
+</div>
+<div id="modalReserva" class="modal-overlay">
+    <div class="modal-content" style="width: 350px;">
+        <h3 id="tituloModalReserva" style="margin-top:0;">Nueva Reserva</h3>
+        
+        <input type="hidden" id="reservaId">
+        
+       <div class="form-group">
+            <label>Tipo (Categoría)</label>
+            <input type="text" id="reservaTipoHabitacion" readonly style="background-color: #f4f4f4; cursor: not-allowed;" placeholder="Ej: Habitación Estándar">
+        </div>
+        <div class="form-group">
+            <label>N° Habitación Asignada</label>
+            <input type="number" id="reservaNumeroHabitacion" placeholder="Ej: 15" min="1" max="40">
+        </div>
+        <div class="form-group">
+            <label>Huésped</label>
+            <input type="text" id="reservaHuesped" placeholder="Nombre completo">
+        </div>
+        <div class="form-group">
+            <label>Check-In</label>
+            <input type="date" id="reservaCheckIn">
+        </div>
+        <div class="form-group">
+            <label>Check-Out</label>
+            <input type="date" id="reservaCheckOut">
+        </div>
+        <div class="form-group">
+            <label>Estado</label>
+            <select id="reservaEstado">
+                <option value="Confirmada">Confirmada</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Cancelada">Cancelada</option>
+            </select>
+        </div>
+        
+        <button onclick="guardarReserva()" style="width: 100%; padding: 10px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Guardar Reserva</button>
+        <button onclick="cerrarModalReserva()" style="margin-top: 10px; width: 100%; padding: 10px; background: #ecf0f1; border: none; border-radius: 5px; cursor: pointer;">Cancelar</button>
+    </div>
+</div>
+<div id="login" class="login-container">
+
+    <div class="login-box">
+
+        <h2>Hotel Boutique Valparaíso</h2>
+        <h3>Iniciar Sesión</h3>
+
+        <input type="text" id="usuario" placeholder="Usuario">
+
+        <input type="password" id="clave" placeholder="Contraseña">
+
+        <button onclick="login()">
+            Ingresar
+        </button>
+
+</div>
+</div>
+
+<div id="panel">
+
+    <div class="sidebar">
+        <h1>Hotel Boutique</h1>
+        <h2>Panel Recepción</h2>
+        <p onclick="mostrarSeccion('habitaciones')" style="cursor:pointer;">Habitaciones</p>
+        <p onclick="mostrarSeccion('reservas')" style="cursor:pointer;">Reservas</p>
+        <p onclick="mostrarSeccion('configuracion')" style="cursor:pointer;">Configuración</p>
+        <p onclick="logout()"style="cursor:pointer;margin-top: 500px; border-top: 1px solid #34495e; padding-top: 15px;">Cerrar Sesión</p>
+    </div>
+
+    <div class="content">
+
+    <!-- HABITACIONES -->
+    <div id="habitaciones">
+
+        <div class="header">
+            <h3>Gestión de Habitaciones</h3>
+        </div>
+
+        <div class="legend">
+            <span><div class="dot verde"></div> Disponible</span>
+            <span><div class="dot rojo"></div> Ocupada</span>
+            <span><div class="dot amarillo"></div> Limpieza</span>
+            <span><div class="dot azul"></div> Mantenimiento</span>
+        </div>
+
+<div class="rooms-grid">
+    <div class="room">1</div><div class="room">2</div>
+    <div class="room">3</div><div class="room">4</div>
+    <div class="room">5</div><div class="room">6</div>
+    <div class="room">7</div><div class="room">8</div>
+    <div class="room">9</div><div class="room">10</div>
+    <div class="room">11</div><div class="room">12</div>
+    <div class="room">13</div><div class="room">14</div>
+    <div class="room">15</div><div class="room">16</div>
+    <div class="room">17</div><div class="room">18</div>
+    <div class="room">19</div><div class="room">20</div>
+    <div class="room">21</div><div class="room">22</div>
+    <div class="room">23</div><div class="room">24</div>
+    <div class="room">25</div><div class="room">26</div>
+    <div class="room">27</div><div class="room">28</div>
+    <div class="room">29</div><div class="room">30</div>
+    <div class="room">31</div><div class="room">32</div>
+    <div class="room">33</div><div class="room">34</div>
+    <div class="room">35</div><div class="room">36</div>
+    <div class="room">37</div><div class="room">38</div>
+    <div class="room">39</div><div class="room">40</div>
+</div>
+
+    </div>
+
+    <!-- RESERVAS -->
+<div id="reservas" style="display:none;">
+            <div class="header">
+                <h3>Gestión de Reservas</h3>
+                <button onclick="abrirModalReserva()" style="padding: 10px 15px; background: #2ecc71; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;"> Nueva Reserva</button>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>N° Hab</th>
+                        <th>Huésped</th>
+                        <th>Check-In</th>
+                        <th>Check-Out</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaReservasBody">
+                </tbody>
+            </table>
+        </div>
+    
+
+    <!-- CONFIGURACIÓN -->
+    <div id="configuracion" style="display:none;">
+
+        <div class="header">
+            <h3>Configuración</h3>
+        </div>
+
+        <div style="background:white;padding:20px;border-radius:8px;">
+            <h4>Administración</h4>
+
+            <p><button> Agregar Habitación</button></p>
+            <p><button> Administrar Usuarios</button></p>
+            <p><button> Programar Limpieza</button></p>
+
+        </div>
+
+</div>
+
+</div>
+</div>
+</div>
+<script>
+const API_URL = "https://backendhotel-pj3t.onrender.com/api/reservas";
+let listaReservas = [];
+
+function login() {
+    let usuario = document.getElementById("usuario").value;
+    let clave = document.getElementById("clave").value;
+
+    if (usuario === "admin" && clave === "1234") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("panel").style.display = "flex";
+        cargarReservasDesdeBackend();
+    } else {
+        alert("Usuario o contraseña incorrectos");
+    }
+}
+
+function mostrarSeccion(seccion) {
+    document.getElementById("habitaciones").style.display = "none";
+    document.getElementById("reservas").style.display = "none";
+    document.getElementById("configuracion").style.display = "none";
+
+    document.getElementById(seccion).style.display = "block";
+    if (seccion === "reservas") {
+        cargarReservasDesdeBackend();
+    }
+}
+
+function logout() {
+    document.getElementById("panel").style.display = "none";
+    document.getElementById("login").style.display = "flex";
+    document.getElementById("usuario").value = "";
+    document.getElementById("clave").value = "";
+    mostrarSeccion("habitaciones");
+}
+
+let habitacionSeleccionada = null;
+
+document.addEventListener("DOMContentLoaded", function() {
+    const habitaciones = document.querySelectorAll(".room");
+    habitaciones.forEach(hab => {
+        hab.addEventListener("click", function() {
+            abrirModal(this);
+        });
+    });
+});
+
+function abrirModal(elementoHabitacion) {
+    habitacionSeleccionada = elementoHabitacion;
+    document.getElementById("modalTitulo").innerText = "Habitación " + elementoHabitacion.innerText;
+    document.getElementById("modalEstado").style.display = "flex";
+}
+
+function cerrarModal() {
+    document.getElementById("modalEstado").style.display = "none";
+    habitacionSeleccionada = null;
+}
+
+function cambiarEstado(nuevaClaseColor) {
+    if (habitacionSeleccionada) {
+        habitacionSeleccionada.classList.remove("verde", "rojo", "amarillo", "azul");
+        habitacionSeleccionada.classList.add(nuevaClaseColor);
+        cerrarModal();
+    }
+}
+
+// ================= INTEGRACIÓN BACKEND (SPRING BOOT) =================
+
+// 1. OBTENER TODAS LAS RESERVAS (GET)
+async function cargarReservasDesdeBackend() {
+    try {
+        const respuesta = await fetch(API_URL);
+        if (!respuesta.ok) throw new Error("Error al obtener las reservas");
+        
+        listaReservas = await respuesta.json();
+        renderizarReservas(); // Esto actualiza la tabla de texto
+        
+        // 🔥 AGREGAR ESTA LÍNEA AQUÍ:
+        actualizarGridHabitaciones(); // Esto actualiza los cuadritos de colores
+        
+    } catch (error) {
+        console.error("Error cargando reservas:", error);
+    }
+}
+
+// 2. MOSTRAR EN LA TABLA
+// 1. Actualizar renderizarReservas()
+function renderizarReservas() {
+    const tbody = document.getElementById("tablaReservasBody");
+    tbody.innerHTML = "";
+
+    listaReservas.forEach(reserva => {
+        let fila = document.createElement("tr");
+
+        let nombreHuesped = typeof reserva.huesped === 'object' && reserva.huesped !== null 
+            ? reserva.huesped.nombre : (reserva.huesped || 'Sin nombre');
+
+        let checkIn = reserva.checkIn || reserva.checkin || '-';
+        let checkOut = reserva.checkOut || reserva.checkout || '-';
+        let estado = reserva.estado || 'Confirmada';
+        let colorEstado = estado === 'Confirmada' ? 'green' : (estado === 'Cancelada' ? 'red' : 'orange');
+
+        // Lógica visual para la habitación
+        let numeroHab = reserva.numeroHabitacion ? reserva.numeroHabitacion : "Por asignar";
+        let colorHab = reserva.numeroHabitacion ? "black" : "red";
+
+        fila.innerHTML = `
+            <td>${reserva.tipoHabitacion || '-'}</td>
+            <td style="color: ${colorHab}; font-weight: bold;">${numeroHab}</td>
+            <td>${nombreHuesped}</td>
+            <td>${checkIn}</td>
+            <td>${checkOut}</td>
+            <td style="color: ${colorEstado}; font-weight: bold;">${estado}</td>
+            <td>
+                <button class="btn-accion btn-editar" onclick="abrirModalReserva(${reserva.id})">Editar</button>
+                <button class="btn-accion btn-eliminar" onclick="eliminarReserva(${reserva.id})">Borrar</button>
+            </td>
+        `;
+        tbody.appendChild(fila);
+    });
+}
+
+// 2. Actualizar abrirModalReserva()
+function abrirModalReserva(id = null) {
+    if (id) {
+        document.getElementById("tituloModalReserva").innerText = "Editar Reserva / Asignar Hab.";
+        let reserva = listaReservas.find(r => r.id === id);
+        if (!reserva) return;
+
+        let nombreHuesped = typeof reserva.huesped === 'object' && reserva.huesped !== null 
+            ? reserva.huesped.nombre : reserva.huesped;
+
+        document.getElementById("reservaId").value = reserva.id;
+        document.getElementById("reservaTipoHabitacion").value = reserva.tipoHabitacion || "";
+        document.getElementById("reservaNumeroHabitacion").value = reserva.numeroHabitacion || "";
+        document.getElementById("reservaHuesped").value = nombreHuesped;
+        document.getElementById("reservaCheckIn").value = reserva.checkIn || reserva.checkin;
+        document.getElementById("reservaCheckOut").value = reserva.checkOut || reserva.checkout;
+        document.getElementById("reservaEstado").value = reserva.estado || "Confirmada";
+    } else {
+        // Limpiar el formulario para una "Nueva Reserva"
+        document.getElementById("tituloModalReserva").innerText = "Nueva Reserva";
+        document.getElementById("reservaId").value = "";
+        document.getElementById("reservaTipoHabitacion").value = "Registro Manual"; 
+        document.getElementById("reservaNumeroHabitacion").value = "";
+        document.getElementById("reservaHuesped").value = "";
+        document.getElementById("reservaCheckIn").value = "";
+        document.getElementById("reservaCheckOut").value = "";
+        document.getElementById("reservaEstado").value = "Confirmada";
+    }
+    
+    document.getElementById("modalReserva").style.display = "flex";
+}
+// 3. Actualizar guardarReserva() para que envíe los nuevos datos al PUT
+async function guardarReserva() {
+    let id = document.getElementById("reservaId").value;
+    let tipoHabitacion = document.getElementById("reservaTipoHabitacion").value;
+    let numeroHabitacion = document.getElementById("reservaNumeroHabitacion").value;
+    let huespedNombre = document.getElementById("reservaHuesped").value;
+    let checkin = document.getElementById("reservaCheckIn").value;
+    let checkout = document.getElementById("reservaCheckOut").value;
+    let estado = document.getElementById("reservaEstado").value;
+
+    // Validación básica para no enviar datos vacíos
+    if (!huespedNombre || !checkin || !checkout) {
+        alert("Faltan datos obligatorios (Huésped y Fechas).");
+        return;
+    }
+
+    const payload = {
+        tipoHabitacion: tipoHabitacion,
+        numeroHabitacion: numeroHabitacion,
+        checkIn: checkin,
+        checkOut: checkout,
+        estado: estado,
+        huesped: { nombre: huespedNombre }
+    };
+
+    try {
+        let respuesta;
+        if (id) {
+            // EDITAR RESERVA EXISTENTE (PUT)
+            respuesta = await fetch(`${API_URL}/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+        } else {
+            // CREAR NUEVA RESERVA (POST) - ¡Esto faltaba!
+            respuesta = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+        }
+        
+        if (respuesta.ok) {
+            cerrarModalReserva();
+            await cargarReservasDesdeBackend();
+        } else {
+            alert("Error al guardar la reserva en el servidor.");
+        }
+    } catch (error) {
+        console.error("Error conectando al backend:", error);
+    }
+}// 4. ELIMINAR RESERVA (DELETE)
+async function eliminarReserva(id) {
+    if (confirm("¿Estás seguro de que deseas eliminar esta reserva?")) {
+        try {
+            const respuesta = await fetch(`${API_URL}/${id}`, {
+                method: "DELETE"
+            });
+
+            if (respuesta.ok) {
+                await cargarReservasDesdeBackend();
+            } else {
+                alert("Error al eliminar la reserva.");
+            }
+        } catch (error) {
+            console.error("Error eliminando la reserva:", error);
+        }
+    }
+}
+function cerrarModalReserva() {
+    document.getElementById("modalReserva").style.display = "none";
+}
+function actualizarGridHabitaciones() {
+    // 1. Obtener todos los cuadritos
+    const habitaciones = document.querySelectorAll(".room");
+    
+    // 2. Reiniciar todas a verde (Disponible)
+    habitaciones.forEach(hab => {
+        hab.className = "room verde";
+    });
+
+    // 3. Obtener la fecha de hoy (Formato YYYY-MM-DD)
+    const hoy = new Date().toISOString().split('T')[0];
+
+    // 4. Leer la base de datos (listaReservas)
+    listaReservas.forEach(reserva => {
+        if (reserva.estado === 'Confirmada' && reserva.numeroHabitacion) {
+            let checkIn = reserva.checkIn || reserva.checkin;
+            let checkOut = reserva.checkOut || reserva.checkout;
+
+            // Si el día de hoy está entre el Check-in y el Check-out (incluido)
+            if (hoy >= checkIn && hoy <= checkOut) {
+                habitaciones.forEach(hab => {
+                    if (hab.innerText === reserva.numeroHabitacion.toString()) {
+                        hab.className = "room rojo";
+                    }
+                });
+            }
+        }
+    });
+}
+</script>
+
+
+</body>
+</html
