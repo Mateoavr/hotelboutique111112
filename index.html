@@ -24,15 +24,18 @@
     gap:10px;
 }
 
-.room{
-    height:65px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    border-radius:8px;
-    font-size:24px;
-    font-weight:bold;
-    color:white;
+.room {
+    height: 75px; /* Más alta para que quepan las fechas */
+    display: flex;
+    flex-direction: column; /* Apila el número y las fechas */
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    text-align: center;
 }
 .login-container{
     width:100%;
@@ -245,28 +248,28 @@ th { background-color: #2c3e50; color: white; }
             <span><div class="dot azul"></div> Mantenimiento</span>
         </div>
 
-<div class="rooms-grid">
-    <div class="room">1</div><div class="room">2</div>
-    <div class="room">3</div><div class="room">4</div>
-    <div class="room">5</div><div class="room">6</div>
-    <div class="room">7</div><div class="room">8</div>
-    <div class="room">9</div><div class="room">10</div>
-    <div class="room">11</div><div class="room">12</div>
-    <div class="room">13</div><div class="room">14</div>
-    <div class="room">15</div><div class="room">16</div>
-    <div class="room">17</div><div class="room">18</div>
-    <div class="room">19</div><div class="room">20</div>
-    <div class="room">21</div><div class="room">22</div>
-    <div class="room">23</div><div class="room">24</div>
-    <div class="room">25</div><div class="room">26</div>
-    <div class="room">27</div><div class="room">28</div>
-    <div class="room">29</div><div class="room">30</div>
-    <div class="room">31</div><div class="room">32</div>
-    <div class="room">33</div><div class="room">34</div>
-    <div class="room">35</div><div class="room">36</div>
-    <div class="room">37</div><div class="room">38</div>
-    <div class="room">39</div><div class="room">40</div>
-</div>
+<!-- Habitaciones Estándar (1-20) -->
+        <h4 style="margin-top: 30px; color: #2c3e50; border-bottom: 2px solid #ddd; padding-bottom: 5px;">Habitaciones Estándar (1 - 20)</h4>
+        <div class="rooms-grid">
+            <div class="room" data-num="1">1</div><div class="room" data-num="2">2</div><div class="room" data-num="3">3</div><div class="room" data-num="4">4</div><div class="room" data-num="5">5</div>
+            <div class="room" data-num="6">6</div><div class="room" data-num="7">7</div><div class="room" data-num="8">8</div><div class="room" data-num="9">9</div><div class="room" data-num="10">10</div>
+            <div class="room" data-num="11">11</div><div class="room" data-num="12">12</div><div class="room" data-num="13">13</div><div class="room" data-num="14">14</div><div class="room" data-num="15">15</div>
+            <div class="room" data-num="16">16</div><div class="room" data-num="17">17</div><div class="room" data-num="18">18</div><div class="room" data-num="19">19</div><div class="room" data-num="20">20</div>
+        </div>
+
+        <!-- Habitaciones Dobles (21-30) -->
+        <h4 style="margin-top: 30px; color: #2c3e50; border-bottom: 2px solid #ddd; padding-bottom: 5px;">Habitaciones Dobles (21 - 30)</h4>
+        <div class="rooms-grid">
+            <div class="room" data-num="21">21</div><div class="room" data-num="22">22</div><div class="room" data-num="23">23</div><div class="room" data-num="24">24</div><div class="room" data-num="25">25</div>
+            <div class="room" data-num="26">26</div><div class="room" data-num="27">27</div><div class="room" data-num="28">28</div><div class="room" data-num="29">29</div><div class="room" data-num="30">30</div>
+        </div>
+
+        <!-- Habitaciones Familiares (31-40) -->
+        <h4 style="margin-top: 30px; color: #2c3e50; border-bottom: 2px solid #ddd; padding-bottom: 5px;">Habitaciones Familiares (31 - 40)</h4>
+        <div class="rooms-grid">
+            <div class="room" data-num="31">31</div><div class="room" data-num="32">32</div><div class="room" data-num="33">33</div><div class="room" data-num="34">34</div><div class="room" data-num="35">35</div>
+            <div class="room" data-num="36">36</div><div class="room" data-num="37">37</div><div class="room" data-num="38">38</div><div class="room" data-num="39">39</div><div class="room" data-num="40">40</div>
+        </div>
 
     </div>
 
@@ -562,25 +565,39 @@ function actualizarGridHabitaciones() {
     // 1. Obtener todos los cuadritos
     const habitaciones = document.querySelectorAll(".room");
     
-    // 2. Reiniciar todas a verde (Disponible)
+    // 2. Reiniciar todas a verde y dejar solo el número limpio
     habitaciones.forEach(hab => {
         hab.className = "room verde";
+        hab.innerHTML = hab.getAttribute("data-num"); // Restaura el número original
     });
 
-    // 3. Obtener la fecha de hoy (Formato YYYY-MM-DD)
+    // 3. Obtener la fecha de hoy
     const hoy = new Date().toISOString().split('T')[0];
 
-    // 4. Leer la base de datos (listaReservas)
+    // 4. Leer la base de datos y pintar de rojo inyectando las fechas
     listaReservas.forEach(reserva => {
         if (reserva.estado === 'Confirmada' && reserva.numeroHabitacion) {
             let checkIn = reserva.checkIn || reserva.checkin;
             let checkOut = reserva.checkOut || reserva.checkout;
 
-            // Si el día de hoy está entre el Check-in y el Check-out (incluido)
+            // Si el día de hoy está entre el Check-in y el Check-out
             if (hoy >= checkIn && hoy <= checkOut) {
                 habitaciones.forEach(hab => {
-                    if (hab.innerText === reserva.numeroHabitacion.toString()) {
+                    // Usamos el atributo data-num para que no choque con las fechas
+                    if (hab.getAttribute("data-num") === reserva.numeroHabitacion.toString()) {
                         hab.className = "room rojo";
+                        
+                        // Acortar fecha para que quepa en el cuadro (Ej: 2024-12-25 -> 12-25)
+                        let inCorto = checkIn.substring(5);
+                        let outCorto = checkOut.substring(5);
+                        
+                        // Inyectar el número + las fechas
+                        hab.innerHTML = `
+                            <span>${reserva.numeroHabitacion}</span>
+                            <span style="font-size: 11px; font-weight: normal; margin-top: 4px;">
+                                ${inCorto} / ${outCorto}
+                            </span>
+                        `;
                     }
                 });
             }
