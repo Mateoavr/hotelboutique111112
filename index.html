@@ -484,6 +484,22 @@ async function guardarReserva() {
         alert("Faltan datos obligatorios (Huésped y Fechas).");
         return;
     }
+    if (numeroHabitacion) {
+        let num = parseInt(numeroHabitacion);
+        
+        if (tipoHabitacion === "Habitación Estándar" && (num < 1 || num > 20)) {
+            alert("Error: Las Habitaciones Estándar corresponden a los números del 1 al 20.");
+            return;
+        }
+        if (tipoHabitacion === "Habitación Doble" && (num < 21 || num > 30)) {
+            alert("Error: Las Habitaciones Dobles corresponden a los números del 21 al 30.");
+            return;
+        }
+        if (tipoHabitacion === "Habitación Familiar" && (num < 31 || num > 40)) {
+            alert("Error: Las Habitaciones Familiares corresponden a los números del 31 al 40.");
+            return;
+        }
+    }
 
     const payload = {
         tipoHabitacion: tipoHabitacion,
@@ -504,7 +520,7 @@ async function guardarReserva() {
                 body: JSON.stringify(payload)
             });
         } else {
-            // CREAR NUEVA RESERVA (POST) - ¡Esto faltaba!
+            // CREAR NUEVA RESERVA (POST) 
             respuesta = await fetch(API_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
