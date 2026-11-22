@@ -587,10 +587,10 @@ function actualizarGridHabitaciones() {
                         hab.className = "room rojo";
                         
      let [inYear, inMonth, inDay] = checkIn.split('-');
-let inCorto = `${inDay}/${inMonth}`;
+let inCorto = `${inDay}/${inMonth}/${inYear}`;
 
 let [outYear, outMonth, outDay] = checkOut.split('-');
-let outCorto = `${outDay}/${outMonth}`;
+let outCorto = `${outDay}/${outMonth}/${outYear}`;
 
 // Inyectar el número + las fechas con el formato DD/MM - DD/MM
 hab.innerHTML = `
