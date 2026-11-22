@@ -586,20 +586,19 @@ function actualizarGridHabitaciones() {
                     if (hab.getAttribute("data-num") === reserva.numeroHabitacion.toString()) {
                         hab.className = "room rojo";
                         
-                        // Transformar de YYYY-MM-DD a DD/MM
-                        let [inYear, inMonth, inDay] = checkIn.split('-');
-                        let inCorto = `${inDay}/${inMonth}`;
-                        
-                        let [outYear, outMonth, outDay] = checkOut.split('-');
-                        let outCorto = `${outDay}/${outMonth}`;
-                        
-                        // Inyectar el número + las fechas con el formato deseado
-                        hab.innerHTML = `
-                            <span>${reserva.numeroHabitacion}</span>
-                            <span style="font-size: 11px; font-weight: normal; margin-top: 4px;">
-                                ${inCorto} - ${outCorto}
-                            </span>
-                        `;
+     let [inYear, inMonth, inDay] = checkIn.split('-');
+let inCorto = `${inDay}/${inMonth}`;
+
+let [outYear, outMonth, outDay] = checkOut.split('-');
+let outCorto = `${outDay}/${outMonth}`;
+
+// Inyectar el número + las fechas con el formato DD/MM - DD/MM
+hab.innerHTML = `
+    <span>${reserva.numeroHabitacion}</span>
+    <span style="font-size: 11px; font-weight: normal; margin-top: 4px;">
+        ${inCorto} - ${outCorto}
+    </span>
+`;
                     }
                 });
             }
