@@ -560,17 +560,20 @@ async function guardarReserva() {
             });
         }
         
-        if (respuesta.ok) {
+if (respuesta.ok) {
             cerrarModalReserva();
             await cargarReservasDesdeBackend();
         } else {
-            const errorMensaje = await respuesta.text();
-            alert("No se pudo guardar: " + (errorMensaje || "Error de validación en el servidor."));
+            let mensajeError = "No se pudo guardar la reserva.";
+            try {
+                const errorData = await respuesta.json();
+                mensajeError = errorData.error || errorData.mensaje || mensajeError;
+            } catch (_) {
+                const textoPlano = await respuesta.text();
+                if (textoPlano) mensajeError = textoPlano;
+            }
+            alert("Error: " + mensajeError);
         }
-    } catch (error) {
-        console.error("Error conectando al backend:", error);
-        alert("Error de conexión con el servidor.");
-    }
 }// 4. ELIMINAR RESERVA (DELETE)
 async function eliminarReserva(id) {
     if (confirm("¿Estás seguro de que deseas eliminar esta reserva?")) {
