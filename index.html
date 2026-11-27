@@ -165,39 +165,39 @@ th { background-color: #2c3e50; color: white; }
     </div>
 </div>
 <div id="modalReserva" class="modal-overlay">
-    <div class="modal-content" style="width: 350px;">
+    <div class="modal-content" style="width: 350px; max-height: 90vh; overflow-y: auto;">
         <h3 id="tituloModalReserva" style="margin-top:0;">Nueva Reserva</h3>
         
         <input type="hidden" id="reservaId">
         
-      <div class="form-group">
-    <label for="reservaTipoHabitacion">Tipo (Categoría)</label>
-    <select id="reservaTipoHabitacion" class="form-control">
-        <option value="Habitación Estándar">Habitación Estándar (1 - 20)</option>
-        <option value="Habitación Doble">Habitación Doble (21 - 30)</option>
-        <option value="Habitación Familiar">Habitación Familiar (31 - 40)</option>
-    </select>
-</div>
+        <div class="form-group">
+            <label for="reservaTipoHabitacion">Tipo (Categoría)</label>
+            <select id="reservaTipoHabitacion" class="form-control">
+                <option value="Habitación Estándar">Habitación Estándar (1 - 20)</option>
+                <option value="Habitación Doble">Habitación Doble (21 - 30)</option>
+                <option value="Habitación Familiar">Habitación Familiar (31 - 40)</option>
+            </select>
+        </div>
 
-<div class="form-group">
-    <label for="reservaNumeroHabitacion">N° Habitación Asignada</label>
-    <input type="number" id="reservaNumeroHabitacion" min="1" max="40" placeholder="Ej: 12">
-</div>
+        <div class="form-group">
+            <label for="reservaNumeroHabitacion">N° Habitación Asignada</label>
+            <input type="number" id="reservaNumeroHabitacion" min="1" max="40" placeholder="Ej: 12">
+        </div>
 
-<div class="form-group">
-    <label for="reservaHuesped">Nombre Huésped</label>
-    <input type="text" id="reservaHuesped" placeholder="Nombre completo">
-</div>
+        <div class="form-group">
+            <label for="reservaHuesped">Nombre Huésped</label>
+            <input type="text" id="reservaHuesped" placeholder="Nombre completo">
+        </div>
 
-<div class="form-group">
-    <label for="reservaRut">RUT Huésped</label>
-    <input type="text" id="reservaRut" placeholder="Ej: 12.345.678-9">
-</div>
+        <div class="form-group">
+            <label for="reservaRut">RUT Huésped</label>
+            <input type="text" id="reservaRut" placeholder="Ej: 12.345.678-9">
+        </div>
 
-<div class="form-group">
-    <label for="reservaCorreo">Correo Huésped</label>
-    <input type="email" id="reservaCorreo" placeholder="Ej: cliente@correo.com">
-</div>
+        <div class="form-group">
+            <label for="reservaCorreo">Correo Huésped</label>
+            <input type="email" id="reservaCorreo" placeholder="Ej: cliente@correo.com">
+        </div>
         <div class="form-group">
             <label>Check-In</label>
             <input type="date" id="reservaCheckIn">
