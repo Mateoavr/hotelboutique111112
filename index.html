@@ -488,16 +488,24 @@ async function guardarReserva() {
     let id = document.getElementById("reservaId").value;
     let tipoHabitacion = document.getElementById("reservaTipoHabitacion").value;
     let numeroHabitacion = document.getElementById("reservaNumeroHabitacion").value;
-    let huespedNombre = document.getElementById("reservaHuesped").value;
+    let huespedNombre = document.getElementById("reservaHuesped").value.trim();
+    let huespedRut = document.getElementById("reservaRut").value.trim();
     let checkin = document.getElementById("reservaCheckIn").value;
     let checkout = document.getElementById("reservaCheckOut").value;
     let estado = document.getElementById("reservaEstado").value;
 
-    // Validación básica para no enviar datos vacíos
-    if (!huespedNombre || !checkin || !checkout) {
-        alert("Faltan datos obligatorios (Huésped y Fechas).");
+    // Validación básica de campos obligatorios
+    if (!huespedNombre || !huespedRut || !checkin || !checkout) {
+        alert("Faltan datos obligatorios (Nombre, RUT y Fechas).");
         return;
     }
+
+    if (checkout <= checkin) {
+        alert("La fecha de Check-Out debe ser posterior al Check-In.");
+        return;
+    }
+
+    // Validación de rango de habitación física según categoría
     if (numeroHabitacion) {
         let num = parseInt(numeroHabitacion);
         
@@ -517,11 +525,14 @@ async function guardarReserva() {
 
     const payload = {
         tipoHabitacion: tipoHabitacion,
-        numeroHabitacion: numeroHabitacion,
+        numeroHabitacion: numeroHabitacion || null,
         checkIn: checkin,
         checkOut: checkout,
         estado: estado,
-        huesped: { nombre: huespedNombre }
+        huesped: { 
+            nombre: huespedNombre,
+            rut: huespedRut
+        }
     };
 
     try {
@@ -546,10 +557,13 @@ async function guardarReserva() {
             cerrarModalReserva();
             await cargarReservasDesdeBackend();
         } else {
-            alert("Error al guardar la reserva en el servidor.");
+            // Lee el mensaje exacto del backend (ej. stock agotado o RUT duplicado)
+            const errorMensaje = await respuesta.text();
+            alert("No se pudo guardar: " + (errorMensaje || "Error de validación en el servidor."));
         }
     } catch (error) {
         console.error("Error conectando al backend:", error);
+        alert("Error de conexión con el servidor.");
     }
 }// 4. ELIMINAR RESERVA (DELETE)
 async function eliminarReserva(id) {
