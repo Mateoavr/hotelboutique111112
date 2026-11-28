@@ -222,7 +222,7 @@
         <input type="text" id="usuario" placeholder="Usuario">
         <input type="password" id="clave" placeholder="Contraseña">
 
-        <button onclick="login()">Ingresar</button>
+        <button onclick="iniciarSesion()">Ingresar</button>
     </div>
 </div>
 
@@ -319,7 +319,7 @@ const API_URL = "https://backendhotel-pj3t.onrender.com/api/reservas";
 let listaReservas = [];
 let habitacionSeleccionada = null;
 
-function login() {
+function iniciarSesion() {
     let usuario = document.getElementById("usuario").value;
     let clave = document.getElementById("clave").value;
 
